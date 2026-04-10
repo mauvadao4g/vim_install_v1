@@ -1,7 +1,10 @@
 #!/bin/bash
 # MAUVADAO
-# Versão: 1.0.6
+# Versão: 1.0.7
 # Script para adicionar, commitar e enviar alterações ao Git
+# Adicinado verificação denpasta Git
+
+
 clear
 # Função para verificar conexão SSH com o GitHub
 verificar_ssh_github() {
@@ -14,8 +17,30 @@ verificar_ssh_github() {
     fi
 }
 
+
+
+# Verifica se é um repositorio Git
+_verificar_git(){
+        # Detecta branch
+        BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+
+        if [ -z "$BRANCH" ]; then
+            echo -e  "\e[1;31m[!] Não conseguiu detectar branch.\e[0m"
+            exit 0
+        else
+            echo -e "\e[1;34m[*] Branch: $BRANCH\e[0m"
+        fi
+
+}
+
+# Verifica se é um repositorio git.
+_verificar_git
+
 # Verifica a conexão SSH antes de continuar
 verificar_ssh_github
+
+
+
 
 # Função para criar nova versão
 _new() {
